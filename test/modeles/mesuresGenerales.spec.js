@@ -183,5 +183,27 @@ describe('La liste des mesures générales', () => {
       const stats = mesuresGenerales.statistiques(['id1', 'id2']).toJSON();
       expect(stats.une.totalConcernees).to.equal(2);
     });
+
+    it('calcule le nombre de mesures renseignées par statut', () => {
+      const mesuresGenerales = creeMesuresGenerales([
+        { id: 'id1', statut: 'fait' },
+        { id: 'id2', statut: 'nonFait' },
+      ]);
+
+      const stats = mesuresGenerales.statistiques(['id1', 'id2']).toJSON();
+      expect(stats.une.statuts.fait).to.equal(1);
+      expect(stats.une.statuts.nonFait).to.equal(1);
+    });
+
+    it('calcule le nombre de mesures renseignées par statut en ignorant les non retenues', () => {
+      const mesuresGenerales = creeMesuresGenerales([
+        { id: 'id1', statut: 'fait' },
+        { id: 'id2', statut: 'nonRetenu' },
+      ]);
+
+      const stats = mesuresGenerales.statistiques(['id1', 'id2']).toJSON();
+      expect(stats.une.statuts.fait).to.equal(1);
+      expect(stats.une.statuts.nonRetenu).to.be(undefined);
+    });
   });
 });

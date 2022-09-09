@@ -84,6 +84,10 @@ class StatistiquesMesures {
     return this.nombreMesuresParRecommandation('indispensables');
   }
 
+  nombreParStatut(idCategorie) {
+    return this.donnees[idCategorie].statuts;
+  }
+
   nombreRecommandees() {
     return this.nombreMesuresParRecommandation('recommandees');
   }

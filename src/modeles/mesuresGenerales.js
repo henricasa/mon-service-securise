@@ -34,6 +34,16 @@ class MesuresGenerales extends ElementsConstructibles {
     const nonFait = (statut) => statut === MesureGenerale.STATUT_NON_FAIT;
     const enCours = (statut) => statut === MesureGenerale.STATUT_EN_COURS;
 
+    const statutsMesureConcernee = [
+      MesureGenerale.STATUT_FAIT,
+      MesureGenerale.STATUT_EN_COURS,
+      MesureGenerale.STATUT_NON_FAIT,
+    ];
+
+    const mesuresParStatutsInitiales = () => statutsMesureConcernee.reduce(
+      (accumulateur, statut) => ({ ...accumulateur, [statut]: 0 }), {}
+    );
+
     const statsInitiales = () => ({
       indispensablesFaites: 0,
       indispensablesNonFaites: 0,
@@ -46,13 +56,8 @@ class MesuresGenerales extends ElementsConstructibles {
       totalConcernees: 0,
       totalIndispensables: 0,
       totalRecommandees: 0,
+      statuts: mesuresParStatutsInitiales(),
     });
-
-    const statutsMesureConcernee = [
-      MesureGenerale.STATUT_FAIT,
-      MesureGenerale.STATUT_EN_COURS,
-      MesureGenerale.STATUT_NON_FAIT,
-    ];
 
     const stats = this.referentiel.identifiantsCategoriesMesures()
       .reduce((acc, categorie) => Object.assign(acc, { [categorie]: statsInitiales() }), {});
@@ -79,9 +84,10 @@ class MesuresGenerales extends ElementsConstructibles {
       stats[categorie].recommandeesNonFaites += (nonFait(statut) && mesure.estRecommandee())
         ? 1
         : 0;
-      stats[categorie].totalConcernees += (statutsMesureConcernee.includes(statut))
-        ? 1
-        : 0;
+      if (statutsMesureConcernee.includes(statut)) {
+        stats[categorie].totalConcernees += 1;
+        stats[categorie].statuts[statut] += 1;
+      }
     });
 
     identifiantsMesuresPersonnalisees
