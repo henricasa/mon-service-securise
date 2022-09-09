@@ -43,9 +43,16 @@ class MesuresGenerales extends ElementsConstructibles {
       recommandeesEnCours: 0,
       recommandeesNonFaites: 0,
       retenues: 0,
+      totalConcernees: 0,
       totalIndispensables: 0,
       totalRecommandees: 0,
     });
+
+    const statutsMesureConcernee = [
+      MesureGenerale.STATUT_FAIT,
+      MesureGenerale.STATUT_EN_COURS,
+      MesureGenerale.STATUT_NON_FAIT,
+    ];
 
     const stats = this.referentiel.identifiantsCategoriesMesures()
       .reduce((acc, categorie) => Object.assign(acc, { [categorie]: statsInitiales() }), {});
@@ -70,6 +77,9 @@ class MesuresGenerales extends ElementsConstructibles {
         ? 1
         : 0;
       stats[categorie].recommandeesNonFaites += (nonFait(statut) && mesure.estRecommandee())
+        ? 1
+        : 0;
+      stats[categorie].totalConcernees += (statutsMesureConcernee.includes(statut))
         ? 1
         : 0;
     });

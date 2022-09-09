@@ -113,6 +113,10 @@ class StatistiquesMesures {
   toJSON() {
     return JSON.parse(JSON.stringify(this.donnees));
   }
+
+  totalConcernees(idCategorie) {
+    return this.donnees[idCategorie].totalConcernees;
+  }
 }
 
 module.exports = StatistiquesMesures;

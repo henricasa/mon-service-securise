@@ -98,6 +98,13 @@ describe('Les statistiques sur les mesures de sécurité', () => {
     expect(stats.nombreRecommandees().enCours).to.equal(3);
   });
 
+  elles('connaissent le total de mesures concernées pour une catégorie', () => {
+    const stats = new StatistiquesMesures({
+      une: { totalConcernees: 6, retenues: 5, misesEnOeuvre: 2 },
+    }, referentiel);
+    expect(stats.totalConcernees('une')).to.equal(6);
+  });
+
   elles("s'affichent au format JSON", () => {
     const stats = new StatistiquesMesures({
       une: { retenues: 4, misesEnOeuvre: 2 },

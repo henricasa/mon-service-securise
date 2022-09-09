@@ -173,5 +173,15 @@ describe('La liste des mesures générales', () => {
       const stats = mesuresGenerales.statistiques(['id2']).toJSON();
       expect(stats.une.recommandeesNonFaites).to.equal(1);
     });
+
+    it('calcule le nombre total de mesures concernées', () => {
+      const mesuresGenerales = creeMesuresGenerales([
+        { id: 'id1', statut: 'fait' },
+        { id: 'id2', statut: 'nonFait' },
+      ]);
+
+      const stats = mesuresGenerales.statistiques(['id1', 'id2']).toJSON();
+      expect(stats.une.totalConcernees).to.equal(2);
+    });
   });
 });
