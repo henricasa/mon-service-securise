@@ -30,6 +30,10 @@ class Mesures extends InformationsHomologation {
       .length;
   }
 
+  nombreMesuresSpecifiques() {
+    return this.mesuresSpecifiques.nombre();
+  }
+
   nonSaisies() {
     return this.mesuresGenerales.nonSaisies();
   }

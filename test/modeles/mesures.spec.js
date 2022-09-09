@@ -97,4 +97,12 @@ describe('Les mesures liées à une homologation', () => {
 
     expect(mesures.nombreTotalMesuresGeneralesIndispensables()).to.equal(1);
   });
+
+  elles('connaissent le nombre de mesures spécifiques', () => {
+    const mesures = new Mesures({
+      mesuresSpecifiques: [{ description: 'Une mesure spécifique', modalites: 'Des modalités' }],
+    });
+
+    expect(mesures.nombreMesuresSpecifiques()).to.equal(1);
+  });
 });

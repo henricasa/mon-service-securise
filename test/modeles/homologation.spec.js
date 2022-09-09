@@ -249,6 +249,14 @@ describe('Une homologation', () => {
     expect(homologation.nombreTotalMesuresGeneralesIndispensables()).to.equal(1);
   });
 
+  it('connaît le nombre de mesures spécifiques', () => {
+    const homologation = new Homologation({
+      mesuresSpecifiques: [{ description: 'Une mesure spécifique', modalites: 'Des modalités' }],
+    });
+
+    expect(homologation.nombreMesuresSpecifiques()).to.equal(1);
+  });
+
   it('sait décrire le statut de déploiement', () => {
     const referentiel = Referentiel.creeReferentiel({
       statutsDeploiement: {
