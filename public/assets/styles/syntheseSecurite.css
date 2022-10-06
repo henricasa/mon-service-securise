@@ -256,7 +256,7 @@ section > h2 {
   color: var(--bleu-mise-en-avant);
 }
 
-.regroupement-criticite .total-mesures {
+.total-mesures {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -305,4 +305,64 @@ section > h2 {
 
 .legendes .legende.legende-a-remplir::before {
   background-color: #fff;
+}
+
+.regroupement-categorie .diagram-categories{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 350px;
+}
+
+.diagram-categorie {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+}
+
+.diagram-categorie h5 {
+  font-size: 1em;
+  margin: auto 0;
+  color: #08416A;
+}
+
+.diagram-categorie .diagram {
+  display: flex;
+  width: 250px;
+  height: 40px;
+}
+
+.diagram-categorie .statut-mesure {
+  color: #fff;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.diagram-categorie .statut-mesure:not(:empty):first-of-type {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.diagram-categorie .statut-mesure:not(:empty):last-of-type {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.diagram-categorie .statut-mesure:not(:empty) {
+  min-width: 1.2em;
+}
+
+.diagram-categorie .fait {
+  background-color: #0A4C8C;
+}
+
+.diagram-categorie .en-cours {
+  background-color: #75A1E8
+}
+
+.diagram-categorie .non-fait {
+  background-color: #E4EFFF;
+  color: darkblue;
 }

@@ -96,4 +96,26 @@ block append page
               .legende.legende-non-faites Non faites
               .legende.legende-a-remplir À remplir
 
+        h3 Par catégorie
+        .regroupement-categorie
+          - const categories = statistiquesMesures.categories();
+          .graphique.diagram-categories
+            each idCategorie in categories
+              .diagram-categorie
+                h5= referentiel.descriptionCategorie(idCategorie)
+                div( class = `diagram ${idCategorie}`, data-total = statistiquesMesures.totalConcernees(idCategorie))
+                  - const affichageNombreMesures = (nombreMesures) => (nombreMesures ? nombreMesures : '');
+                  .statut-mesure.fait= affichageNombreMesures(statistiquesMesures.nombreParStatut(idCategorie).fait)
+                  .statut-mesure.en-cours= affichageNombreMesures(statistiquesMesures.nombreParStatut(idCategorie).enCours)
+                  .statut-mesure.non-fait= affichageNombreMesures(statistiquesMesures.nombreParStatut(idCategorie).nonFait)
+          .total-mesures
+            .total
+              strong Total :
+              span &nbsp;#{homologation.nombreTotalMesuresGenerales()} mesures proposées par l'ANSSI + #{homologation.nombreMesuresSpecifiques()} ajoutées par l'équipe
+            .legendes
+              .legende.legende-faites Faites
+              .legende.legende-en-cours En cours
+              .legende.legende-non-faites Non faites
+              .legende.legende-a-remplir À remplir
+
   script(type = 'module', src = '/statique/homologation/syntheseSecurite.js')
