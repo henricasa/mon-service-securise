@@ -11,6 +11,7 @@ const CHEMINS_BIBLIOTHEQUES = {
   'jspdf.umd.min.js': 'https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js',
   moment: 'https://cdn.jsdelivr.net/npm/moment@^2',
   'moment-locale-fr.js': 'https://cdn.jsdelivr.net/npm/moment/locale/fr.js',
+  'paged.polyfill.js': 'https://unpkg.com/pagedjs@0.3.5/dist/paged.polyfill.js',
   'purify.min.js': 'https://unpkg.com/dompurify/dist/purify.min.js',
 };
 
