@@ -6,6 +6,8 @@
   <meta content="IE=edge" http-equiv="X-UA-Compatible">
   <title>Scientific math paper</title>
   <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta http-equiv="Cache-Control" content="no-cache"/>
+  <link href="/statique/assets/styles/fonts.css" rel="stylesheet" type="text/css">
 
   <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -16,35 +18,43 @@
     });
   </script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  <script src="/statique/assets/MathJax.js" type='text/script'></script>
 
-  <script>
+  <script type="text/script">
     window.PagedConfig = {
       auto: false
     };
   </script>
-  <script src="https://unpkg.com/pagedjs/dist/paged.polyfill.js"></script>
-  <script>
+  <script src="/statique/assets/paged.polyfill.js"></script>
+  <script type="text/script">
     MathJax.Hub.Queue(function () {
       window.PagedPolyfill.preview();
     });
   </script>
 
 
-<style>
+<style rel="stylesheet" type="text/css">
 @page{
   size: A4;
   margin-top: 10mm;
   margin-right: 20mm;
   margin-bottom: 25mm;
   margin-left: 15mm;
+  font-family: 'Marianne';
+
+  @top-left {
+    content: 'TOP-LEFT';
+    background-image: url('/statique/assets/images/logo_anssi.png');
+    background-size: 30mm;
+    background-repeat: no-repeat;
+  }
 
   @bottom-left {
     content: counter(page);
   }
 
   @bottom-center {
-    content: 'coucou';
+    content: 'BOTTOM-CENTER';
     text-transform: uppercase;
   }
 }

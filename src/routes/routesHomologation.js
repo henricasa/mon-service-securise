@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 
 const ActionsSaisie = require('../modeles/actionsSaisie');
 const Homologation = require('../modeles/homologation');
@@ -10,6 +11,11 @@ const routesHomologation = (middleware, referentiel, moteurRegles) => {
   routes.get('/creation', middleware.verificationAcceptationCGU, (_requete, reponse) => {
     const homologation = new Homologation({});
     reponse.render('homologation/creation', { referentiel, homologation });
+  });
+
+  routes.get('/paged', middleware.verificationAcceptationCGU, (_requete, reponse) => {
+    const homologation = new Homologation({});
+    reponse.sendFile(path.join(__dirname + '/../vues/homologation/paged.html'));
   });
 
   const donneesActionsSaisie = (version, homologation) => (

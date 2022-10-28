@@ -13,18 +13,8 @@ const middleware = (configuration = {}) => {
   });
 
   const positionneHeaders = (requete, reponse, suite) => {
-    const { nonce } = requete;
-    const politiqueCommuneSecuriteContenus = "default-src 'self'; img-src 'self' data:;";
-    const politiqueSecuriteStyles = nonce
-      ? `style-src 'self' 'nonce-${nonce}';`
-      : '';
-    const politiqueSecuriteScripts = "script-src 'self'";
     reponse.set({
-      'content-security-policy':
-        `${politiqueCommuneSecuriteContenus} ${politiqueSecuriteStyles} ${politiqueSecuriteScripts}`,
-      'x-frame-options': 'deny',
-      'x-content-type-options': 'nosniff',
-      'referrer-policy': 'no-referrer',
+      'content-security-policy': "default-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';",
     });
 
     suite();
