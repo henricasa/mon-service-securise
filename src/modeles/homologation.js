@@ -108,8 +108,26 @@ class Homologation {
     return this.descriptionService.localisationDonnees;
   }
 
-  mesuresParStatut() {
-    return this.mesures.parStatut();
+  mesuresParStatut(...traitements) {
+    if (!traitements) {
+      return this.mesures.parStatut();
+    }
+
+    const statuts = this.mesures.parStatut();
+    const traite = (texte) => traitements.reduce(
+      (accumulateur, traitement) => traitement(accumulateur), texte
+    );
+    const mesuresDecodees = (mesures) => mesures.map((mesure) => (
+      { ...mesure, description: traite(mesure.description), modalites: traite(mesure.modalites) }
+    ));
+    const categoriesDecodees = (categories) => Object.keys(categories)
+      .reduce((accumulateur, categorie) => (
+        { ...accumulateur, [categorie]: mesuresDecodees(categories[categorie]) }
+      ), {});
+    return Object.keys(statuts)
+      .reduce((accumulateur, statut) => (
+        { ...accumulateur, [statut]: categoriesDecodees(statuts[statut]) }
+      ), {});
   }
 
   mesuresSpecifiques() { return this.mesures.mesuresSpecifiques; }

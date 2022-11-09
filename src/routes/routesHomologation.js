@@ -1,13 +1,26 @@
 const express = require('express');
-const fs = require('fs');
+const { decode } = require('html-entities');
+const fsPromises = require('fs/promises');
 const pdflatex = require('node-pdflatex').default;
 
 const ActionsSaisie = require('../modeles/actionsSaisie');
 const Homologation = require('../modeles/homologation');
 const InformationsHomologation = require('../modeles/informationsHomologation');
-const moteurModele = require('../moteurs/moteurModele');
+const moteurModeleParDefaut = require('../moteurs/moteurModele');
 
-const routesHomologation = (middleware, referentiel, moteurRegles) => {
+const echappeCaracteresSpeciauxLatex = (texte) => texte.replaceAll('&', '\\&');
+
+const latexPdf = ({ confectionne }) => ({
+  genere: (urlSource, donneesAInjecter) => fsPromises.readFile(urlSource)
+    .then((donneesFichier) => {
+      const pdfConfectionne = confectionne(donneesFichier.toString(), donneesAInjecter);
+      return pdflatex(pdfConfectionne);
+    }),
+});
+
+const routesHomologation = (
+  middleware, referentiel, moteurRegles, moteurModele = moteurModeleParDefaut
+) => {
   const routes = express.Router();
 
   routes.get('/creation', middleware.verificationAcceptationCGU, (_requete, reponse) => {
@@ -59,18 +72,21 @@ const routesHomologation = (middleware, referentiel, moteurRegles) => {
       reponse.render('homologation/annexes/mesures', { homologation, referentiel });
     });
 
-  routes.get('/:id/syntheseSecurite/annexes/mesures.pdf',
+  routes.get('/:id/syntheseSecurite/annexesMesures.pdf',
     middleware.trouveHomologation,
-    (_requete, reponse, suite) => {
-      fs.readFile('src/vuesTex/annexesMesures.tex', (_erreurs, donnees) => {
-        const pdfConfectionne = moteurModele.confectionne(donnees.toString(), {});
-        pdflatex(pdfConfectionne)
-          .then((pdf) => {
-            reponse.contentType('application/pdf');
-            reponse.send(pdf);
-          })
-          .catch(suite);
-      });
+    (requete, reponse, suite) => {
+      const { homologation } = requete;
+      const donneesMisesEnForme = homologation.mesuresParStatut(
+        decode, echappeCaracteresSpeciauxLatex
+      );
+      const latexPdfGenerateur = latexPdf(moteurModele);
+      const donneesAInjecter = { categorie: 'PROTECTION', mesures: donneesMisesEnForme.enCours.protection };
+      latexPdfGenerateur.genere('src/vuesTex/annexesMesures.template.tex', donneesAInjecter)
+        .then((pdf) => {
+          reponse.contentType('application/pdf');
+          reponse.send(pdf);
+        })
+        .catch(suite);
     });
 
   routes.get('/:id/descriptionService', middleware.trouveHomologation, (requete, reponse) => {

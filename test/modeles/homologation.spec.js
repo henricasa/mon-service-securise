@@ -286,6 +286,31 @@ describe('Une homologation', () => {
     expect(homologation.mesuresParStatut()).to.eql({ unStatut: {} });
   });
 
+  it('utilise un traitement sur les modalités et les descriptions avant le renvoi des mesures par statut et par catégorie', () => {
+    const homologation = new Homologation({
+      mesuresGenerales: [{ id: 'mesure1', statut: 'enCours', modalites: 'Modalités d&#39;une mesure' }],
+    });
+    homologation.mesures.parStatut = () => ({ enCours: { categorie1: [{ description: 'mesure1', indispensable: true, modalites: 'Modalités d&#39;une mesure' }] } });
+    const traitement = (texte) => texte.replaceAll('&#39;', "'");
+
+    expect(homologation.mesuresParStatut(traitement).enCours.categorie1.length).to.equal(1);
+    expect(homologation.mesuresParStatut(traitement).enCours.categorie1[0].modalites).to.equal("Modalités d'une mesure");
+  });
+
+  it('utilise plusieurs traitements sur les modalités et les descriptions avant le renvoi des mesures par statut et par catégorie', () => {
+    const homologation = new Homologation({
+      mesuresGenerales: [{ id: 'mesure1', statut: 'enCours', modalites: 'Modalités d&#39;une mesure' }],
+    });
+    homologation.mesures.parStatut = () => ({ enCours: { categorie1: [{ description: 'mesure#1', indispensable: true, modalites: 'Modalités d&#39;une mesure' }] } });
+    const traitement1 = (texte) => texte.replaceAll('&#39;', "'");
+    const traitement2 = (texte) => texte.replaceAll('#', '+');
+
+    const mesuresParStatut = homologation.mesuresParStatut(traitement1, traitement2);
+    expect(mesuresParStatut.enCours.categorie1.length).to.equal(1);
+    expect(mesuresParStatut.enCours.categorie1[0].description).to.equal('mesure+1');
+    expect(mesuresParStatut.enCours.categorie1[0].modalites).to.equal("Modalités d'une mesure");
+  });
+
   it('sait décrire le statut de déploiement', () => {
     const referentiel = Referentiel.creeReferentiel({
       statutsDeploiement: {
