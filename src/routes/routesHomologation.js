@@ -5,6 +5,7 @@ const pdflatex = require('node-pdflatex').default;
 const ActionsSaisie = require('../modeles/actionsSaisie');
 const Homologation = require('../modeles/homologation');
 const InformationsHomologation = require('../modeles/informationsHomologation');
+const moteurModele = require('../moteurs/moteurModele');
 
 const routesHomologation = (middleware, referentiel, moteurRegles) => {
   const routes = express.Router();
@@ -60,11 +61,10 @@ const routesHomologation = (middleware, referentiel, moteurRegles) => {
 
   routes.get('/:id/syntheseSecurite/annexes/mesures.pdf',
     middleware.trouveHomologation,
-    (requete, reponse, suite) => {
-      const { homologation } = requete;
+    (_requete, reponse, suite) => {
       fs.readFile('src/vuesTex/annexesMesures.tex', (_erreurs, donnees) => {
-        const avecCheminAbsolu = donnees.toString().replace(/__CHEMIN_BASE_ABSOLU__/g, process.env.CHEMIN_BASE_ABSOLU);
-        pdflatex(avecCheminAbsolu)
+        const pdfConfectionne = moteurModele.confectionne(donnees.toString(), {});
+        pdflatex(pdfConfectionne)
           .then((pdf) => {
             reponse.contentType('application/pdf');
             reponse.send(pdf);
