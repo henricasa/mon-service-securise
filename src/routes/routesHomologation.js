@@ -1,4 +1,6 @@
 const express = require('express');
+const fs = require('fs');
+const pdflatex = require('node-pdflatex').default;
 
 const ActionsSaisie = require('../modeles/actionsSaisie');
 const Homologation = require('../modeles/homologation');
@@ -54,6 +56,21 @@ const routesHomologation = (middleware, referentiel, moteurRegles) => {
     (requete, reponse) => {
       const { homologation } = requete;
       reponse.render('homologation/annexes/mesures', { homologation, referentiel });
+    });
+
+  routes.get('/:id/syntheseSecurite/annexes/mesures.pdf',
+    middleware.trouveHomologation,
+    (requete, reponse, suite) => {
+      const { homologation } = requete;
+      fs.readFile('src/vuesTex/annexesMesures.tex', (_erreurs, donnees) => {
+        const avecCheminAbsolu = donnees.toString().replace(/__CHEMIN_BASE_ABSOLU__/g, process.env.CHEMIN_BASE_ABSOLU);
+        pdflatex(avecCheminAbsolu)
+          .then((pdf) => {
+            reponse.contentType('application/pdf');
+            reponse.send(pdf);
+          })
+          .catch(suite);
+      });
     });
 
   routes.get('/:id/descriptionService', middleware.trouveHomologation, (requete, reponse) => {
