@@ -76,11 +76,12 @@ const routesHomologation = (
     middleware.trouveHomologation,
     (requete, reponse, suite) => {
       const { homologation } = requete;
+      const statuts = { enCours: 'En cours', nonFait: 'Non fait', fait: 'Fait' };
       const donneesMisesEnForme = homologation.mesuresParStatut(
         decode, echappeCaracteresSpeciauxLatex
       );
       const latexPdfGenerateur = latexPdf(moteurModele);
-      const donneesAInjecter = { categorie: 'PROTECTION', mesures: donneesMisesEnForme.enCours.protection };
+      const donneesAInjecter = { statuts, mesuresParStatut: donneesMisesEnForme };
       latexPdfGenerateur.genere('src/vuesTex/annexesMesures.template.tex', donneesAInjecter)
         .then((pdf) => {
           reponse.contentType('application/pdf');
