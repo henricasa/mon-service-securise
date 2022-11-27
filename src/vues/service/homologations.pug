@@ -6,13 +6,25 @@ block append styles
 block zone-principale
   form.homologation
     h1.action Homologuer
-    .consignes.
-      Complétez, téléchargez puis faites signer la
-      <i>Décision d'homologation de sécurité</i>
-      de votre service. Une fois ces étapes réalisées, renseignez la date de
-      signature pour connaître la date de la prochaine homologation.
 
     hr
+
+    ul.consignes
+      li Télécharger les documents ci-dessous :
+        ul.documents
+          li: a(href = '') Décision d'homologation de sécurité (modèle)
+          li: a(href = `/homologation/${homologation.id}/syntheseSecurite`) Synthèse de l'état de sécurité du service
+          li: a(href = `/pdf/${homologation.id}/annexeMesures.pdf`) Annexes
+      li.
+        Remplir la décision d'homologation de sécurité avec l'ensemble des
+        personnes concernées.
+      li.
+        Présenter, pour signature, la décision d'homologation à l'autorité
+        d'homologation ainsi que la synthèse de la sécurité.
+      li.
+        Reconnectez-vous ensuite pour renseigner la date de signature et la
+        durée de validité de l'homologation dans la dernière étape <b>Date</b>.
+
 
     .bouton.blanc
       a(href = `/homologation/${homologation.id}`) Revenir à la synthèse
