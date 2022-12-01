@@ -9,11 +9,9 @@ block append styles
 
 block formulaire
   form.homologation#roles-responsabilites
-    h1.action Rôles et responsabilités
+    h1.action Contacts utiles
     p.
-      Renseignez les informations concernant les responsables et les contributeurs
-      au fonctionnement du service. Cette cartographie permet de connaître l'ensemble
-      des acteurs de la sécurité du service et de les contacter.
+      Listez toutes les personnes assurant le bon fonctionnement du service pour les contacter rapidement en cas de besoin.
 
     section
       nav#onglets-liens
@@ -27,7 +25,7 @@ block formulaire
         })
 
         +inputIdentite({
-          role: 'Spécialiste cybersécurité',
+          role: 'Sécurité des systèmes d'information',
           nomParametre: 'expertCybersecurite',
         })
 
@@ -37,7 +35,7 @@ block formulaire
         })
 
         +inputIdentite({
-          role: 'Responsable métier du projet',
+          role: 'Pilotage du projet',
           nomParametre: 'piloteProjet',
         })
 
@@ -53,19 +51,19 @@ block formulaire
         })
 
         +inputPartiePrenante({
-          categorie: 'Développement / fourniture du service',
+          categorie: 'Développement / fourniture',
           nomParametre: 'developpementFourniture',
           donnees: homologation.rolesResponsabilites.partiesPrenantes.developpementFourniture(),
         })
 
         +inputPartiePrenante({
-          categorie: 'Maintenance du service',
+          categorie: 'Maintenance opérationnelle',
           nomParametre: 'maintenanceService',
           donnees: homologation.rolesResponsabilites.partiesPrenantes.maintenanceService(),
         })
 
         +inputPartiePrenante({
-          categorie: 'Gestion de la sécurité du service',
+          categorie: 'Maintenance de la sécurité',
           nomParametre: 'securiteService',
           donnees: homologation.rolesResponsabilites.partiesPrenantes.securiteService(),
         })
