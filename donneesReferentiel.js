@@ -544,7 +544,7 @@ module.exports = {
       description: 'Utiliser des applicatifs récents et maintenus à jour par leurs éditeurs',
       categorie: 'protection',
       indispensable: true,
-      descriptionLongue: "Lors du développement ou de l'achat du service, toujours utiliser une version récente et maintenueà jour par les éditeurs, des applicatifs contribuant au fonctionnement du service (ex. une version récente et à jour d'un système de gestion de contenu (CMS), des dépendances d'une l'application).<br>Cette mesure vise à éviter d'utiliser des versions anciennes, susceptibles de comporter des vulnérabilités connues mais non corrigées ou qui ne seraient plus appelées à faire l'objet de mises à jour de sécurité à l'avenir par l'éditeur.",
+      descriptionLongue: "Lors du développement ou de l'achat du service, toujours utiliser une version récente et maintenue à jour par les éditeurs, des applicatifs contribuant au fonctionnement du service (ex. une version récente et à jour d'un système de gestion de contenu (CMS), des dépendances d'une l'application).<br>Cette mesure vise à éviter d'utiliser des versions anciennes, susceptibles de comporter des vulnérabilités connues mais non corrigées ou qui ne seraient plus appelées à faire l'objet de mises à jour de sécurité à l'avenir par l'éditeur.",
     },
 
     gestionIncidents: {
@@ -555,7 +555,7 @@ module.exports = {
     journalAcces: {
       description: "Conserver l'historique des accès des administrateurs au service",
       categorie: 'defense',
-      descriptionLongue: "Lors de la configuration du service, activer la journalisation et la centralisation des accès des administrateurs, des utilisateurs et des applicatifs concourant au fonctionnement du service.<br>Cette mesure permet de faciliter la détection d'actions inhabituelles susceptibles d'être malveillantes et d'investiguer a posteriori les causes d'un incident de sécurité, en vue de faciliter sa remédiation.",
+      descriptionLongue: "Lors de la configuration du service, activer la journalisation et la centralisation des accès des administrateurs, des utilisateurs et des applicatifs concourants au fonctionnement du service.<br>Cette mesure permet de faciliter la détection d'actions inhabituelles susceptibles d'être malveillantes et d'investiguer a posteriori les causes d'un incident de sécurité, en vue de faciliter sa remédiation.",
     },
     journalEvenementSecu: {
       description: "Conserver l'historique de l'ensemble des événements de sécurité sur le service",
@@ -602,7 +602,7 @@ module.exports = {
       description: 'Mettre en place une sauvegarde en continu de la machine virtuelle sur laquelle est déployé le service numérique.',
       categorie: 'resilience',
       indispensable: true,
-      descriptionLongue: "Sauvegarder en continu la machine virtuelle sur laquelle est déployée le service.<br>Cette mesure permet la restauration rapide du service, à partir de la dernière sauvegarde de la machine virtuelle effectuée, en cas d'incident de sécurité qui conduirait à leur suppression et ou les rendrait inaccessible.",
+      descriptionLongue: "Sauvegarder en continu la machine virtuelle sur laquelle est déployée le service.<br>Cette mesure permet la restauration rapide du service, à partir de la dernière sauvegarde de la machine virtuelle effectuée, en cas d'incident de sécurité qui conduirait à leur suppression et ou les rendrait inaccessibles.",
     },
     testsSauvegardes: {
       description: 'Vérifier régulièrement les sauvegardes',
