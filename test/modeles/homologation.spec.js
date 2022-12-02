@@ -5,6 +5,7 @@ const InformationsHomologation = require('../../src/modeles/informationsHomologa
 const Homologation = require('../../src/modeles/homologation');
 const MesureGenerale = require('../../src/modeles/mesureGenerale');
 const Utilisateur = require('../../src/modeles/utilisateur');
+const VueRisquesDescription = require('../../src/modeles/objetsVues/vueRisquesDescription');
 
 describe('Une homologation', () => {
   it('connaît le nom du service', () => {
@@ -338,5 +339,15 @@ describe('Une homologation', () => {
     }, referentiel);
 
     expect(homologation.descriptionLocalisationDonnees()).to.equal('France');
+  });
+
+  it('permet de récupérer un objet de vue décrivant les risques', () => {
+    const homologation = new Homologation({
+      id: '123',
+      idUtilisateur: '456',
+      descriptionService: { nomService: 'nom' },
+    });
+
+    expect(homologation.risquesVueObjet()).to.be.a(VueRisquesDescription);
   });
 });
